@@ -17,7 +17,7 @@ class Agent:
         self._gamma = gamma
         self._use_target_net = use_target_net
         self._version = version
-        self._device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+        self._device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         
         # Initialize replay buffer (assuming a ReplayBuffer class exists)
         self._buffer = ReplayBufferNumpy(self._buffer_size, self._board_size, self._frames, self._n_actions)
