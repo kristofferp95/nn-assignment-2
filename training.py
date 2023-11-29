@@ -32,7 +32,7 @@ with open('model_config/{:s}.json'.format(version), 'r') as f:
     buffer_size = m['buffer_size']
 
 # define no of episodes, logging frequency
-episodes = 2 * (10**5)
+episodes = 6 * (10**5)
 log_frequency = 500
 games_eval = 8
 
@@ -48,17 +48,18 @@ print('Agent is {:s}'.format(agent_type))
 # setup the epsilon range and decay rate for epsilon
 # define rewrad type and update frequency, see utils for more details
 if(agent_type in ['DeepQLearningAgent']):
-    epsilon, epsilon_end = 1, 0.05
+    epsilon, epsilon_end = 1, 0.01
     reward_type = 'current'
     sample_actions = False
     n_games_training = 8*16
-    decay = 0.97
+    decay = 0.98
     if(supervised):
         # lower the epsilon since some starting policy has already been trained
         epsilon = 0.01
         # load the existing model from a supervised method
         # or some other pretrained model
-        agent.load_model(file_path='models/{:s}'.format(version))
+        agent.load_model(file_path='models/v17.1/model_iteration_562500')
+        print("training with loaded model")
         # agent.set_weights_trainable()
 
 

@@ -3,9 +3,9 @@
     "board_size":10,
     "frames":2,
     "max_time_limit":998,
-    "supervised":0,
+    "supervised":1,
     "n_actions":4,
-    "obstacles":1,
+    "obstacles":13,
     "buffer_size":80000,
     "model":{
         "Conv2D":{

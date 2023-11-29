@@ -7,8 +7,8 @@ import torch.nn.functional as F
 import pickle
 
 class Agent:
-    def __init__(self, board_size=10, frames=2, buffer_size=10000,
-                 gamma=0.97, n_actions=3, use_target_net=True,
+    def __init__(self, board_size=10, frames=2, buffer_size=80000,
+                 gamma=0.98, n_actions=3, use_target_net=True,
                  version=''):
         self._board_size = board_size
         self._frames = frames
@@ -142,7 +142,7 @@ class QNetwork(nn.Module):
 
 class DeepQLearningAgent(Agent):  # Inherits from Agent
     def __init__(self, board_size=10, frames=2, buffer_size=10000,
-                 gamma=0.93, n_actions=3, use_target_net=True,
+                 gamma=0.98, n_actions=3, use_target_net=True,
                  version='', lr=0.0007):
         super().__init__(board_size, frames, buffer_size,  # Initialize the base class
                          gamma, n_actions, use_target_net,
@@ -157,9 +157,9 @@ class DeepQLearningAgent(Agent):  # Inherits from Agent
             self._target_net.load_state_dict(self._model.state_dict())
             self._target_net.eval()  # Set target network to evaluation mode
 
-        learning_rate = 0.0009  # Just an example value, adjust based on your needs
+        learning_rate = 0.00001
 
-        self._optimizer = optim.AdamW(self._model.parameters(), lr=learning_rate, weight_decay=1e-5)
+        self._optimizer = optim.Adam(self._model.parameters(), lr=learning_rate, weight_decay=1e-5)
 
 
     def _get_model(self):
@@ -327,5 +327,4 @@ class DeepQLearningAgent(Agent):  # Inherits from Agent
         with torch.no_grad():
             model_outputs = self._model(state_tensor).cpu().numpy()
         return model_outputs
-
 
